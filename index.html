@@ -1073,6 +1073,15 @@ document.addEventListener("click", (e) => {
   if (e.target !== wordInput) suggestionsBox.style.display = "none";
   if (!sideDrawer.contains(e.target) && e.target !== menuToggleBtn) closeMenu();
 });
+  // Add this inside your script tag, right at the bottom
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/Oromo-dictionary-/sw.js')
+      .then(reg => console.log('Service Worker Registered!', reg))
+      .catch(err => console.log('Service Worker Failed to Register', err));
+  });
+}
+
 </script>
 
 </body>
