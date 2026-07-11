@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="om">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Galmee Jechootaa - Oromo Dictionary</title>
+
+<style>
+:root {
+  --primary: #0f766e;        /* Deep Premium Teal / Royal Emerald */
+  --primary-light: #f0fdfa;  /* Super soft teal background tint */
+  --accent-yellow: #f59e0b;  /* Elegant Rich Amber Gold for Favorites & Rating */
+  --accent-red: #ef4444;     /* Crisp coral red for structural states */
+  --text-dark: #0f172a;      /* Deep midnight slate for high contrast */
+  --text-muted: #64748b;     /* Elegant cool gray for secondary text */
+  --bg-color: #f8fafc;       /* Clean porcelain background */
+  --card-border: #e2e8f0;    /* Soft micro-borders */
+  --app-bg: #ffffff;
+  
+  /* Dynamic Responsive Typography Scales */
+  --font-h1: clamp(20px, 6vw, 28px);
+  --font-sub: clamp(11px, 3.5vw, 14px);
+  --font-body: clamp(14px, 4vw, 16px);
+  --font-result: clamp(18px, 5.5vw, 24px);
+  --font-badge: clamp(12px, 3.5vw, 15px);
+}
+
+/* Dark Mode Theme Variables Override */
+body.dark-mode {
+  --bg-color: #0f172a;       /* Deep slate background */
+  --text-dark: #f8fafc;      /* Bright white-silver text */
+  --text-muted: #94a3b8;     /* High-visibility muted gray */
+  --card-border: #334155;    /* Dark border separation lines */
+  --primary-light: #112c2a;  /* Dark emerald hue depth accent fill */
+  --app-bg: #1e293b;         /* Solid card/container dark surface */
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--text-dark);
+  overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Fluid App Workspace Shell wrapper */
+.app-container {
+  background: var(--app-bg);
+  width: 100%;
+  max-width: 600px; 
+  min-height: 100vh; 
+  padding: clamp(16px, 4vw, 30px);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 50px rgba(15, 23, 42, 0.02);
+  transition: background 0.3s ease;
+}
+
+/* Wide screen adjustments */
+@media (min-width: 640px) {
+  body {
+    padding: 20px 0;
+  }
+  .app-container {
+    min-height: calc(100vh - 40px);
+    border-radius: 24px;
+    box-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.08);
+  }
+}
+
+/* NAVIGATION BAR POSITION FIX: Clean menu button alignment */
+.nav-header {
+  display: flex;
+  justify-content: flex-start; 
+  align-items: center;
+  width: 100%;
+  margin-bottom: 12px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  z-index: 5;
+}
+
+.menu-btn div {
+  width: 24px;
+  height: 3px;
+  background-color: var(--text-dark);
+  border-radius: 4px;
+  transition: 0.3s;
+}
+
+/* FIXED LAPTOP VISIBILITY: Changed position to fixed relative to viewport screen boundaries */
+.side-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: min(280px, 85vw);
+  height: 100%;
+  background: var(--app-bg);
+  box-shadow: 10px 0 40px rgba(15, 23, 42, 0.08);
+  z-index: 100;
+  transform: translateX(-100%);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.3s ease;
+  padding: 40px 24px;
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.side-drawer.open {
+  transform: translateX(0);
+}
+
+.drawer-title {
+  font-size: var(--font-h1);
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 20px;
+  border-bottom: 2px solid var(--primary-light);
+  padding-bottom: 12px;
+}
+
+.drawer-items-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex-grow: 1;
+}
+
+.drawer-item {
+  padding: 12px 16px;
+  font-size: var(--font-badge);
+  font-weight: 600;
+  color: var(--text-dark);
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.drawer-item:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+/* Integrated App Rating Matrix Container */
+.drawer-rating-box {
+  margin-top: auto;
+  padding: 16px 8px 12px 8px;
+  border-top: 1px dashed var(--card-border);
+  text-align: center;
+}
+
+.rating-label {
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 6px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.rating-stars {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+}
+
+.star-interactive {
+  font-size: 24px;
+  color: #cbd5e1;
+  cursor: pointer;
+  transition: transform 0.15s ease, color 0.15s ease;
+}
+
+body.dark-mode .star-interactive {
+  color: #475569;
+}
+
+.star-interactive:hover {
+  transform: scale(1.15);
+}
+
+.star-interactive.filled {
+  color: var(--accent-yellow);
+}
+
+/* Elegant Copyright Box Placement */
+.drawer-copyright {
+  font-size: 11px;
+  color: var(--text-muted);
+  text-align: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--card-border);
+  line-height: 1.4;
+}
+
+/* FIXED OVERLAY FOR LAPTOP SCREEN BOUNDARIES */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.4);
+  backdrop-filter: blur(4px);
+  z-index: 90;
+  display: none;
+}
+
+/* Info Modals Layout adjustments */
+.info-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0.95);
+  width: 88%;
+  max-width: 380px;
+  background: var(--app-bg);
+  border-radius: 24px;
+  padding: clamp(20px, 5vw, 28px);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.3);
+  z-index: 110;
+  display: none;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  text-align: left;
+  border: 1px solid var(--card-border);
+}
+
+.info-modal.active {
+  display: block;
+  opacity: 1;
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+  font-size: calc(var(--font-body) + 3px);
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 12px;
+}
+
+.modal-body {
+  font-size: calc(var(--font-body) - 1px);
+  color: var(--text-muted);
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.modal-close-btn {
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 14px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 100%;
+  text-align: center;
+  transition: background 0.2s;
+}
+
+/* App Branding Header */
+.header-block {
+  text-align: center;
+  margin-bottom: clamp(16px, 4vw, 24px);
+}
+
+.logo-badge {
+  width: clamp(60px, 15vw, 76px);
+  height: clamp(60px, 15vw, 76px);
+  background: linear-gradient(135deg, var(--primary) 0%, #115e59 100%);
+  border-radius: clamp(16px, 4vw, 22px);
+  margin: 0 auto 12px auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 10px 25px rgba(15, 118, 110, 0.25);
+}
+
+.icon-book {
+  width: 45%;
+  height: 32%;
+  display: flex;
+  gap: 3px;
+}
+
+.book-page {
+  flex: 1;
+  background: #ffffff;
+  height: 100%;
+}
+
+.page-left {
+  border-radius: 4px 1px 1px 4px;
+  transform: skewY(-6deg);
+}
+
+.page-right {
+  border-radius: 1px 4px 4px 1px;
+  transform: skewY(6deg);
+}
+
+h1 {
+  color: var(--text-dark);
+  font-size: var(--font-h1);
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 2px;
+}
+
+.subtitle {
+  color: var(--text-muted);
+  font-size: var(--font-sub);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* App Segment Tab Controls Bar */
+.tab-row {
+  display: flex;
+  background: #f1f5f9;
+  padding: 5px;
+  border-radius: 16px;
+  margin-bottom: clamp(16px, 4vw, 24px);
+  transition: background 0.2s ease;
+}
+
+body.dark-mode .tab-row {
+  background: #334155;
+}
+
+.tab-btn {
+  flex: 1;
+  border: none;
+  background: none;
+  padding: clamp(10px, 3vw, 14px) 4px;
+  font-size: calc(var(--font-body) - 1px);
+  font-weight: 700;
+  color: var(--text-muted);
+  cursor: pointer;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.tab-btn.active {
+  background: #ffffff;
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.05);
+}
+
+body.dark-mode .tab-btn.active {
+  background: var(--app-bg);
+}
+
+/* View Section Control Wrapper */
+.view-section {
+  display: none;
+  flex-grow: 1;
+}
+
+.view-section.active {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Input Search Box Architecture */
+.search-wrapper {
+  position: relative;
+  margin-bottom: clamp(16px, 4vw, 24px);
+  width: 100%;
+}
+
+input {
+  width: 100%;
+  padding: clamp(14px, 4vw, 18px) clamp(16px, 4vw, 22px);
+  border: 2px solid var(--card-border);
+  border-radius: 18px;
+  font-size: var(--font-body);
+  font-weight: 600;
+  outline: none;
+  transition: all 0.25s ease;
+  color: var(--text-dark);
+  background: #f8fafc;
+}
+
+body.dark-mode input {
+  background: #1e293b;
+}
+
+input:focus {
+  border-color: var(--primary);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(15, 118, 110, 0.12);
+}
+
+body.dark-mode input:focus {
+  background: #1e293b;
+}
+
+/* Dynamic Live Search Dropdown */
+.suggestions-box {
+  position: absolute;
+  top: calc(100% + 6px);
+  left: 0;
+  right: 0;
+  background: var(--app-bg);
+  border-radius: 16px;
+  box-shadow: 0 16px 36px rgba(15, 23, 42, 0.12);
+  border: 1px solid var(--card-border);
+  max-height: 240px;
+  overflow-y: auto;
+  z-index: 10;
+  display: none;
+}
+
+.suggestion-item {
+  padding: 14px 22px;
+  cursor: pointer;
+  text-align: left;
+  font-size: var(--font-body);
+  font-weight: 600;
+  transition: all 0.15s ease;
+  border-bottom: 1px solid var(--card-border);
+}
+
+.suggestion-item:last-child {
+  border-bottom: none;
+}
+
+.suggestion-item:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+/* Interactive Canvas Result Card Layout */
+.result-card {
+  flex-grow: 1; 
+  padding: clamp(20px, 5vw, 28px) clamp(16px, 4vw, 24px);
+  background: #f8fafc;
+  border-radius: 20px;
+  border: 1px solid var(--card-border);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: all 0.25s ease;
+  position: relative;
+  margin-bottom: 10px;
+}
+
+body.dark-mode .result-card {
+  background: #151f32;
+}
+
+.result-card.has-match {
+  background: linear-gradient(180deg, var(--app-bg) 0%, var(--primary-light) 100%);
+  border: 1px solid rgba(15, 118, 110, 0.2);
+  justify-content: flex-start;
+  align-items: flex-start;
+  box-shadow: 0 10px 25px rgba(15, 118, 110, 0.03);
+}
+
+.result-card.no-match {
+  background: #fef2f2;
+  border: 1px solid rgba(239, 68, 68, 0.15);
+  justify-content: center;
+  align-items: center;
+}
+
+body.dark-mode .result-card.no-match {
+  background: #2d191e;
+}
+
+.result-label {
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--text-muted);
+  margin-bottom: 14px;
+  width: 100%;
+  font-weight: 700;
+  padding-right: 70px; 
+}
+
+.result-card.no-match .result-label,
+.result-card:not(.has-match) .result-label {
+  text-align: center;
+  padding-right: 0;
+}
+
+.result-text {
+  font-size: var(--font-result);
+  font-weight: 700;
+  width: 100%;
+  line-height: 1.4;
+  word-wrap: break-word;
+}
+
+/* Action Utility Action buttons position boundaries */
+.action-buttons-group {
+  position: absolute;
+  top: clamp(16px, 4vw, 24px);
+  right: clamp(16px, 4vw, 24px);
+  display: flex;
+  gap: clamp(8px, 2.5vw, 14px);
+  align-items: center;
+}
+
+.fav-toggle-icon, .audio-speech-btn {
+  font-size: clamp(22px, 5vw, 25px);
+  cursor: pointer;
+  color: #cbd5e1;
+  background: none;
+  border: none;
+  outline: none;
+  transition: transform 0.15s cubic-bezier(0.175, 0.885, 0.32, 1.275), color 0.15s ease;
+}
+
+body.dark-mode .fav-toggle-icon {
+  color: #475569;
+}
+
+.audio-speech-btn {
+  color: var(--primary);
+}
+
+.fav-toggle-icon:hover, .audio-speech-btn:hover {
+  transform: scale(1.15);
+}
+
+.fav-toggle-icon.pinned {
+  color: var(--accent-yellow);
+}
+
+.match-highlight {
+  color: var(--primary);
+  font-weight: 800;
+}
+
+.example-container {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px dashed rgba(15, 118, 110, 0.2);
+  font-size: var(--font-body);
+  color: var(--text-dark);
+  width: 100%;
+  text-align: left;
+}
+
+.example-title {
+  font-size: 11px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.example-sentence {
+  font-style: italic;
+  line-height: 1.6;
+  word-wrap: break-word;
+}
+
+/* Lists Engine for History & Favorites */
+.data-list-container {
+  flex-grow: 1;
+  overflow-y: auto;
+  border-radius: 16px;
+}
+
+.data-list-item {
+  background: var(--app-bg);
+  padding: 16px clamp(14px, 4vw, 20px);
+  border-radius: 14px;
+  margin-bottom: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  border: 1px solid var(--card-border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.data-list-item:hover {
+  background: var(--primary-light);
+  border-color: rgba(15, 118, 110, 0.15);
+  transform: translateY(-1px);
+}
+
+.list-word-title {
+  font-weight: 700;
+  text-transform: capitalize;
+  font-size: var(--font-body);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.list-word-trans {
+  color: var(--primary);
+  font-weight: 700;
+  font-size: var(--font-body);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.empty-state-notice {
+  padding: 60px 20px;
+  color: var(--text-muted);
+  font-size: var(--font-body);
+  text-align: center;
+  font-style: italic;
+  line-height: 1.5;
+}
+</style>
+</head>
+
+<body>
+
+<div class="app-container">
+
+  <!-- Navigation top bar -->
+  <div class="nav-header">
+    <button class="menu-btn" id="menuToggleBtn">
+      <div></div>
+      <div></div>
+      <div></div>
+    </button>
+  </div>
+
+  <!-- Side Navigation Drawer Components -->
+  <div class="drawer-overlay" id="menuOverlay"></div>
+  <div class="side-drawer" id="sideDrawer">
+    <div class="drawer-title">Giddu-galeessa</div>
+    
+    <div class="drawer-items-wrapper">
+      <div class="drawer-item" id="openAbout">
+        ℹ️ Waayee Keenya (About)
+      </div>
+      <div class="drawer-item" id="openContact">
+        📞 Nu Quunnamaa (Contact)
+      </div>
+      <!-- Relocated Dark Mode Info Toggle Tab Element -->
+      <div class="drawer-item" id="themeToggleBtn">
+        🌓 Dark Mode
+      </div>
+    </div>
+
+    <!-- Rating Architecture Component -->
+    <div class="drawer-rating-box">
+      <div class="rating-label" id="ratingLabel">Sadarkaa Kennaa (Rate Us)</div>
+      <div class="rating-stars">
+        <span class="star-interactive" data-value="1">★</span>
+        <span class="star-interactive" data-value="2">★</span>
+        <span class="star-interactive" data-value="3">★</span>
+        <span class="star-interactive" data-value="4">★</span>
+        <span class="star-interactive" data-value="5">★</span>
+      </div>
+    </div>
+
+    <!-- Copyright Component -->
+    <div class="drawer-copyright">
+      &copy; 2026 Galmee Jechootaa.<br>Mirgi Hunduu Eegamaadha.
+    </div>
+  </div>
+
+  <!-- About Info Modal Panel Layout -->
+  <div class="info-modal" id="aboutModal">
+    <div class="modal-header">Waayee Keenya / About Us</div>
+    <div class="modal-body">
+      Galmee Jechootaa is a premium smart dictionary built to preserve and connect languages seamlessly. Our system provides rapid, bi-directional translation utilities between English and Afaan Oromo to foster learning and precise cultural communication.
+    </div>
+    <button class="modal-close-btn" onclick="closeModal('aboutModal')">Cufi / Close</button>
+  </div>
+
+  <!-- Contact Info Modal Panel Layout -->
+  <div class="info-modal" id="contactModal">
+    <div class="modal-header">Nu Quunnamaa / Contact Us</div>
+    <div class="modal-body">
+      Have word suggestions or technical feedback? Reach out to our translation team:<br><br>
+      <strong>📧 Email:</strong> support@oromodictionary.com<br>
+      <strong>🌐 Website:</strong> www.oromodictionary.com
+    </div>
+    <button class="modal-close-btn" onclick="closeModal('contactModal')">Cufi / Close</button>
+  </div>
+
+  <!-- Main App Header Body -->
+  <div class="header-block">
+    <div class="logo-badge">
+      <div class="icon-book">
+        <div class="book-page page-left"></div>
+        <div class="book-page page-right"></div>
+      </div>
+    </div>
+    <h1>Galmee Jechootaa</h1>
+    <div class="subtitle">English ↔ Afaan Oromo</div>
+  </div>
+
+  <!-- Segment Selector Tab Deck Navigation Menu -->
+  <div class="tab-row">
+    <button class="tab-btn active" onclick="switchSection('searchViewTab', this)">🔍 Search</button>
+    <button class="tab-btn" onclick="switchSection('favoritesViewTab', this)">★ Favourites</button>
+    <button class="tab-btn" onclick="switchSection('historyViewTab', this)">🕒 History</button>
+  </div>
+
+  <!-- VIEW SEGMENT 1: SEARCH CHANNEL VIEW -->
+  <div id="searchViewTab" class="view-section active">
+    <div class="search-wrapper">
+      <input type="text" id="wordInput" placeholder="Barbaadi / Type a word..." autocomplete="off">
+      <div id="suggestionsBox" class="suggestions-box"></div>
+    </div>
+
+    <div id="resultCanvas" class="result-card">
+      <div class="action-buttons-group">
+        <button class="audio-speech-btn" id="audioSpeechBtn" style="display:none;" title="Listen to English word">🔊</button>
+        <button class="fav-toggle-icon" id="favoriteToggleBtn" style="display:none;" title="Save to favorites">★</button>
+      </div>
+      <div class="result-label">Al-tokkoo / Instant Live View</div>
+      <div id="resultText" class="result-text" style="color: #94a3b8; text-align: center; font-weight: 500;">Start typing to filter words</div>
+      <div id="exampleBlock" class="example-container" style="display: none;"></div>
+    </div>
+  </div>
+
+  <!-- VIEW SEGMENT 2: FAVORITES VIEW -->
+  <div id="favoritesViewTab" class="view-section">
+    <div class="data-list-container" id="favoritesContainer"></div>
+  </div>
+
+  <!-- VIEW SEGMENT 3: HISTORY VIEW -->
+  <div id="historyViewTab" class="view-section">
+    <div class="data-list-container" id="historyContainer"></div>
+  </div>
+
+</div>
+
+<script>
+// Internal Context Database System
+const dictionary = {
+  "hello": { "oromo": "akkam", "ex_en": "Hello! How are you doing today?", "ex_om": "Akkam! Har'a akkam jirtu?" },
+  "water": { "oromo": "bishaan", "ex_en": "Can I have a glass of clean water?", "ex_om": "Bishaan qulqulluu bircheeqo tokko naa kennuu dandeessaa?" },
+  "book": { "oromo": "kitaaba", "ex_en": "She is reading an interesting history book.", "ex_om": "Isheen kitaaba seenaa namatti tolu dubbisaa jirti." },
+  "school": { "oromo": "mana barumsaa", "ex_en": "The children walk to school every morning.", "ex_om": "Ijoolleen ganama ganama miilaan gara mana barumsaa deemu." },
+  "teacher": { "oromo": "barsiisaa", "ex_en": "Our English teacher explains things very clearly.", "ex_om": "Barsiisaan keenya kan Ingiliffaa waan hundumaa gadi fageenyaan ibsa." },
+  "student": { "oromo": "barataa", "ex_en": "He is a hard-working university student.", "ex_om": "Inni barataa yuunivarsiitii jabaatee hojjetu dha." },
+  "friend": { "oromo": "hiriyyaa", "ex_en": "A true friend is always there to support you.", "ex_om": "Hiriyyaan dhugaa yeroo mara si gargaaruuf si bira jira." },
+  "love": { "oromo": "jaalala", "ex_en": "A mother's love for her children has no limits.", "ex_om": "Jaalalli haati ijoollee sheetiif qabdu daangaa hin qabu." },
+  "house": { "oromo": "mana", "ex_en": "They are building a modern brick house near the city.", "ex_om": "Isan magaalaa biratti mana suphee amayyaa ijaaraa jiru." },
+  "sun": { "oromo": "aduu", "ex_en": "The sun rises gracefully in the morning sky.", "ex_om": "Aduun ganama bifa bareeddaan dhihaa keessaa baati." }
+};
+
+// State Data Repositories Array Configurations
+let appFavorites = JSON.parse(localStorage.getItem("dic_favs")) || [];
+let appHistory = JSON.parse(localStorage.getItem("dic_hist")) || [];
+let userRatingScore = localStorage.getItem("app_rating") || 0;
+let currentlySelectedEnglishKey = "";
+
+// Element Selectors
+const wordInput = document.getElementById("wordInput");
+const suggestionsBox = document.getElementById("suggestionsBox");
+const resultCanvas = document.getElementById("resultCanvas");
+const resultText = document.getElementById("resultText");
+const exampleBlock = document.getElementById("exampleBlock");
+const favoriteToggleBtn = document.getElementById("favoriteToggleBtn");
+const audioSpeechBtn = document.getElementById("audioSpeechBtn");
+
+const menuToggleBtn = document.getElementById("menuToggleBtn");
+const sideDrawer = document.getElementById("sideDrawer");
+const menuOverlay = document.getElementById("menuOverlay");
+const themeToggleBtn = document.getElementById("themeToggleBtn");
+
+// Synchronized Light / Dark Mode Toggle Matrix Setup
+const savedTheme = localStorage.getItem("app_theme") || "light";
+if (savedTheme === "dark") {
+  document.body.classList.add("dark-mode");
+  themeToggleBtn.innerHTML = "🌓 Light Mode";
+} else {
+  themeToggleBtn.innerHTML = "🌓 Dark Mode";
+}
+
+function globalToggleTheme(shouldBeDark) {
+  if (shouldBeDark) {
+    document.body.classList.add("dark-mode");
+    themeToggleBtn.innerHTML = "🌓 Light Mode";
+    localStorage.setItem("app_theme", "dark");
+  } else {
+    document.body.classList.remove("dark-mode");
+    themeToggleBtn.innerHTML = "🌓 Dark Mode";
+    localStorage.setItem("app_theme", "light");
+  }
+}
+
+// Event hook links for menu bar trigger control
+themeToggleBtn.addEventListener("click", () => {
+  const isDarkNow = document.body.classList.contains("dark-mode");
+  globalToggleTheme(!isDarkNow);
+});
+
+// Global Routing Tab Panel Switches Mapping Logic
+function switchSection(targetTabId, elementControl) {
+  document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  
+  document.getElementById(targetTabId).classList.add('active');
+  elementControl.classList.add('active');
+  
+  if(targetTabId === 'favoritesViewTab') renderFavoritesView();
+  if(targetTabId === 'historyViewTab') renderHistoryView();
+}
+
+// Side Menu Drawer Triggers System Logic
+menuToggleBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  sideDrawer.classList.toggle("open");
+  menuOverlay.style.display = sideDrawer.classList.contains("open") ? "block" : "none";
+});
+
+menuOverlay.addEventListener("click", closeMenu);
+function closeMenu() { sideDrawer.classList.remove("open"); menuOverlay.style.display = "none"; }
+
+document.getElementById("openAbout").addEventListener("click", () => { closeMenu(); openModal("aboutModal"); });
+document.getElementById("openContact").addEventListener("click", () => { closeMenu(); openModal("contactModal"); });
+
+function openModal(id) {
+  const modal = document.getElementById(id);
+  modal.style.display = "block";
+  setTimeout(() => modal.classList.add("active"), 10);
+}
+function closeModal(id) {
+  const modal = document.getElementById(id);
+  modal.classList.remove("active");
+  setTimeout(() => modal.style.display = "none", 250);
+}
+
+// Dynamic Rating Engine Matrix Pipeline Logic
+const ratingStars = document.querySelectorAll(".star-interactive");
+const ratingLabel = document.getElementById("ratingLabel");
+
+function updateStarDisplay(scoreValue) {
+  ratingStars.forEach(star => {
+    const starVal = parseInt(star.getAttribute("data-value"));
+    if (starVal <= scoreValue) {
+      star.classList.add("filled");
+    } else {
+      star.classList.remove("filled");
+    }
+  });
+  if(scoreValue > 0) {
+    ratingLabel.textContent = "Galatoomaa! (Thank you!)";
+    ratingLabel.style.color = "var(--primary)";
+  }
+}
+updateStarDisplay(userRatingScore);
+
+ratingStars.forEach(star => {
+  star.addEventListener("click", () => {
+    const activeValue = parseInt(star.getAttribute("data-value"));
+    userRatingScore = activeValue;
+    localStorage.setItem("app_rating", userRatingScore);
+    updateStarDisplay(userRatingScore);
+  });
+});
+
+// Reset Search State Card Utility Function
+function resetResultCardState() {
+  resultCanvas.className = "result-card";
+  resultText.innerHTML = "Start typing to filter words";
+  resultText.style.color = "#94a3b8";
+  resultText.style.textAlign = "center";
+  resultText.style.fontWeight = "500";
+  exampleBlock.style.display = "none";
+  favoriteToggleBtn.style.display = "none";
+  audioSpeechBtn.style.display = "none";
+}
+
+// Live Text Change Event Bindings
+wordInput.addEventListener("input", () => {
+  const query = wordInput.value.toLowerCase().trim();
+
+  if (!query) {
+    suggestionsBox.style.display = "none";
+    resetResultCardState();
+    return;
+  }
+
+  let matches = Object.keys(dictionary).filter(key => key.startsWith(query));
+  let oromoMatches = Object.keys(dictionary).filter(key => dictionary[key].oromo.startsWith(query));
+
+  suggestionsBox.innerHTML = "";
+
+  if (matches.length > 0 || oromoMatches.length > 0) {
+    suggestionsBox.style.display = "block";
+    
+    matches.forEach(engWord => createSuggestionElement(engWord, engWord));
+    oromoMatches.forEach(engWord => {
+      if (!matches.includes(engWord)) {
+        createSuggestionElement(dictionary[engWord].oromo, engWord);
+      }
+    });
+
+    resultCanvas.className = "result-card";
+    resultText.innerHTML = "Select a filtered option from the list above to view meaning";
+    resultText.style.color = "var(--primary)";
+    resultText.style.textAlign = "center";
+  } else {
+    suggestionsBox.style.display = "none";
+    currentlySelectedEnglishKey = "";
+    resultCanvas.className = "result-card no-match";
+    resultText.innerHTML = "Jechuun kun hin argamne";
+    resultText.style.color = "var(--accent-red)";
+    resultText.style.textAlign = "center";
+    exampleBlock.style.display = "none";
+    favoriteToggleBtn.style.display = "none";
+    audioSpeechBtn.style.display = "none";
+  }
+});
+
+function createSuggestionElement(displayTitle, rawKey) {
+  const div = document.createElement("div");
+  div.className = "suggestion-item";
+  div.innerHTML = `<span style="text-transform: capitalize;">${displayTitle}</span>`;
+  
+  div.addEventListener("click", () => {
+    wordInput.value = displayTitle;
+    suggestionsBox.style.display = "none";
+    performDirectLookup(rawKey, true);
+  });
+  
+  suggestionsBox.appendChild(div);
+}
+
+function performDirectLookup(query, writeToHistoryLog) {
+  if (dictionary[query]) {
+    currentlySelectedEnglishKey = query;
+    renderSuccessState(query, dictionary[query].oromo, dictionary[query].ex_en, dictionary[query].ex_om);
+    if(writeToHistoryLog) pushToHistory(query);
+  } else {
+    const englishKey = Object.keys(dictionary).find(key => dictionary[key].oromo === query);
+    if (englishKey) {
+      currentlySelectedEnglishKey = englishKey;
+      renderSuccessState(query, englishKey, dictionary[englishKey].ex_om, dictionary[englishKey].ex_en);
+      if(writeToHistoryLog) pushToHistory(englishKey);
+    } else {
+      currentlySelectedEnglishKey = "";
+      resultCanvas.className = "result-card no-match";
+      resultText.innerHTML = "Jechuun kun hin argamne";
+      resultText.style.color = "var(--accent-red)";
+      resultText.style.textAlign = "center";
+      exampleBlock.style.display = "none";
+      favoriteToggleBtn.style.display = "none";
+      audioSpeechBtn.style.display = "none";
+    }
+  }
+}
+
+function renderSuccessState(inputWord, solutionWord, textExample, translatedExample) {
+  resultCanvas.className = "result-card has-match";
+  resultText.style.textAlign = "left";
+  resultText.style.color = "var(--text-dark)";
+  resultText.innerHTML = `<span style="text-transform: capitalize;">${inputWord}</span> = <span class="match-highlight">${solutionWord}</span>`;
+  
+  favoriteToggleBtn.style.display = "block";
+  favoriteToggleBtn.className = `fav-toggle-icon ${appFavorites.includes(currentlySelectedEnglishKey) ? 'pinned' : ''}`;
+  
+  audioSpeechBtn.style.display = "block";
+
+  exampleBlock.style.display = "block";
+  exampleBlock.innerHTML = `
+    <div class="example-title">Fakkeenya / Example</div>
+    <div class="example-sentence">
+      <strong>•</strong> ${textExample}<br>
+      <span style="color: var(--primary); font-weight: 600;">• ${translatedExample}</span>
+    </div>
+  `;
+}
+
+// Text-to-Speech Engine
+audioSpeechBtn.addEventListener("click", () => {
+  if (!currentlySelectedEnglishKey) return;
+  window.speechSynthesis.cancel();
+  const utterance = new SpeechSynthesisUtterance(currentlySelectedEnglishKey);
+  utterance.lang = "en-US";
+  utterance.rate = 0.85; 
+  window.speechSynthesis.speak(utterance);
+});
+
+// Favorite Bookmark Trigger
+favoriteToggleBtn.addEventListener("click", () => {
+  if (!currentlySelectedEnglishKey) return;
+  if (appFavorites.includes(currentlySelectedEnglishKey)) {
+    appFavorites = appFavorites.filter(item => item !== currentlySelectedEnglishKey);
+    favoriteToggleBtn.classList.remove("pinned");
+  } else {
+    appFavorites.push(currentlySelectedEnglishKey);
+    favoriteToggleBtn.classList.add("pinned");
+  }
+  localStorage.setItem("dic_favs", JSON.stringify(appFavorites));
+});
+
+// History Tracker Engine
+function pushToHistory(engKey) {
+  appHistory = appHistory.filter(item => item !== engKey);
+  appHistory.unshift(engKey);
+  if(appHistory.length > 25) appHistory.pop();
+  localStorage.setItem("dic_hist", JSON.stringify(appHistory));
+}
+
+// Tab Views Render Logic
+function renderFavoritesView() {
+  const container = document.getElementById("favoritesContainer");
+  container.innerHTML = "";
+  if (appFavorites.length === 0) {
+    container.innerHTML = `<div class="empty-state-notice">Kanneen filataman hin jiran<br>(No favorites saved yet)</div>`;
+    return;
+  }
+  appFavorites.forEach(key => container.appendChild(createDataRowNode(key)));
+}
+
+function renderHistoryView() {
+  const container = document.getElementById("historyContainer");
+  container.innerHTML = "";
+  if (appHistory.length === 0) {
+    container.innerHTML = `<div class="empty-state-notice">Seenaan barbaaddan hin jiru<br>(Search history is empty)</div>`;
+    return;
+  }
+  appHistory.forEach(key => container.appendChild(createDataRowNode(key)));
+}
+
+function createDataRowNode(key) {
+  const row = document.createElement("div");
+  row.className = "data-list-item";
+  row.innerHTML = `<span class="list-word-title">${key}</span><span class="list-word-trans">${dictionary[key].oromo} ➔</span>`;
+  row.addEventListener("click", () => {
+    switchSection('searchViewTab', document.querySelectorAll('.tab-btn')[0]);
+    wordInput.value = key;
+    performDirectLookup(key, true);
+  });
+  return row;
+}
+
+// Event hooks for clicking outside UI components
+document.addEventListener("click", (e) => {
+  if (e.target !== wordInput) suggestionsBox.style.display = "none";
+  if (!sideDrawer.contains(e.target) && e.target !== menuToggleBtn) closeMenu();
+});
+</script>
+
+</body>
+</html>
