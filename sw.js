@@ -3,9 +3,11 @@ const CACHE_NAME = 'oromo-dict-v7';
 const ASSETS = [
   '/Oromo-dictionary-/',
   '/Oromo-dictionary-/index.html',
-  '/Oromo-dictionary-/manifest.json' // Added your new file here
+  '/Oromo-dictionary-/manifest.json',
+  '/Oromo-dictionary-/logo.png',
+  '/Oromo-dictionary-/icon-192.png',
+  '/Oromo-dictionary-/10.jpg'
 ];
-
 // Install Service Worker and cache files
 self.addEventListener('install', (e) => {
   e.waitUntil(
