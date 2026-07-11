@@ -1,4 +1,5 @@
-const CACHE_NAME = 'oromo-dict-v2'; // Changed from v1 to v2 to trigger the update
+const CACHE_NAME = 'oromo-dict-v3'; 
+// Changed from v1 to v2 to trigger the update
 const ASSETS = [
   '/Oromo-dictionary-/',
   '/Oromo-dictionary-/index.html',
