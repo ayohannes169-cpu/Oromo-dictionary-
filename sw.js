@@ -4,7 +4,7 @@ const ASSETS = [
   '/Oromo-dictionary-/',
   '/Oromo-dictionary-/index.html',
   '/Oromo-dictionary-/manifest.json',
-  '/Oromo-dictionary-/logo.png',
+  '/Oromo-dictionary-/logo1.png',
   '/Oromo-dictionary-/icon-192.png',
   '/Oromo-dictionary-/10.jpg'
 ];
