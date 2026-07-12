@@ -689,6 +689,9 @@ body.dark-mode .fav-toggle-icon {
       <div class="drawer-item" id="openContact">
         📞 Nu Quunnamaa (Contact)
       </div>
+        <div class="drawer-item" id="openPrivacy">
+  🔒 Privacy Policy
+        </div>
       <!-- Relocated Dark Mode Info Toggle Tab Element -->
       <div class="drawer-item" id="themeToggleBtn">
         🌓 Dark Mode
@@ -731,8 +734,7 @@ body.dark-mode .fav-toggle-icon {
 
     <!-- Copyright Component -->
     <div class="drawer-copyright">
-      &copy; 2026 Galmee Jechootaa.<br>Mirgi Hunduu Eegamaadha.
-    </div>
+      &copy; 2026 Galmee Jechootaa.<br>All rights reserved 
   </div>
 
   <!-- About Info Modal Panel Layout -->
@@ -760,7 +762,120 @@ johnyjovany2@gmail.com</a><br>
       </div> 
     <button class="modal-close-btn" onclick="closeModal('contactModal')">Cufi / Close</button>
   </div>
+<!-- Privacy Policy Modal -->
+<div class="info-modal" id="privacyModal">
+  <div class="modal-header">🔒 Privacy Policy</div>
 
+  <div class="modal-body" style="max-height:60vh; overflow-y:auto; text-align:left;">
+
+    <h3>Privacy Policy</h3>
+
+    <p><strong>Effective Date:</strong> July 12, 2026</p>
+
+    <p>
+      Welcome to <strong>Galmee Jechootaa – Oromo Dictionary</strong>.
+      Your privacy is important to us. This Privacy Policy explains how we collect,
+      use, and protect your information when you use our website and application.
+    </p>
+
+    <h4>1. Information We Collect</h4>
+
+    <p>
+      Galmee Jechootaa – Oromo Dictionary does not require you to create an account
+      or provide personal information to use the dictionary.
+    </p>
+
+    <p>The application may store the following information locally on your device:</p>
+
+    <ul>
+      <li>Favorite words</li>
+      <li>Search history</li>
+      <li>Theme preference (Light/Dark Mode)</li>
+      <li>App settings</li>
+    </ul>
+
+    <p>
+      This information remains on your device and is not sent to our servers.
+    </p>
+
+    <h4>2. Advertising</h4>
+
+    <p>
+      If advertisements are displayed in the future, they may be provided by
+      third-party advertising services such as Google AdSense or Google AdMob.
+      These services may use cookies or similar technologies to provide relevant
+      advertisements and measure their performance.
+    </p>
+
+    <h4>3. Cookies</h4>
+
+    <p>
+      Our website may use cookies and similar technologies to improve user
+      experience and remember your preferences.
+    </p>
+
+    <h4>4. Third-Party Services</h4>
+
+    <p>
+      The application may use trusted third-party services, including:
+    </p>
+
+    <ul>
+      <li>Google Analytics (if enabled)</li>
+      <li>Google AdSense</li>
+      <li>Google AdMob</li>
+      <li>GitHub Pages (website hosting)</li>
+    </ul>
+
+    <p>
+      These services have their own privacy policies.
+    </p>
+
+    <h4>5. Data Security</h4>
+
+    <p>
+      We take reasonable steps to protect your information. However, no method of
+      electronic storage or internet transmission is completely secure.
+    </p>
+
+    <h4>6. Children's Privacy</h4>
+
+    <p>
+      Our application is intended for users of all ages. We do not knowingly
+      collect personal information from children.
+    </p>
+
+    <h4>7. Changes to This Privacy Policy</h4>
+
+    <p>
+      We may update this Privacy Policy from time to time. Any changes will be
+      posted on this page with an updated effective date.
+    </p>
+
+    <h4>8. Contact Us</h4>
+
+    <p>
+      If you have any questions or suggestions regarding this Privacy Policy,
+      please contact us:
+    </p>
+
+    <p>
+      <strong>Email:</strong><br>
+      <a href="mailto:johnadisu8@gmail.com" style="color:#14b8a6;text-decoration:none;">
+        johnadisu8@gmail.com
+      </a>
+    </p>
+
+    <p>
+      Thank you for using <strong>Galmee Jechootaa – Oromo Dictionary.</strong>
+    </p>
+
+  </div>
+
+  <button class="modal-close-btn" onclick="closeModal('privacyModal')">
+    Close
+  </button>
+</div>
   <!-- Main App Header Body -->
   <div class="header-block">
     <div class="logo-badge">
@@ -1250,7 +1365,10 @@ function closeMenu() { sideDrawer.classList.remove("open"); menuOverlay.style.di
 
 document.getElementById("openAbout").addEventListener("click", () => { closeMenu(); openModal("aboutModal"); });
 document.getElementById("openContact").addEventListener("click", () => { closeMenu(); openModal("contactModal"); });
-
+document.getElementById("openPrivacy").addEventListener("click", () => {
+  closeMenu();
+  openModal("privacyModal");
+});
 function openModal(id) {
   const modal = document.getElementById(id);
   modal.style.display = "block";
