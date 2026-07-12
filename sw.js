@@ -1,10 +1,10 @@
-const CACHE_NAME = 'oromo-dict-v8'; 
+const CACHE_NAME = 'oromo-dict-v9'; 
 // Changed from v1 to v2 to trigger the update
 const ASSETS = [
   '/Oromo-dictionary-/',
   '/Oromo-dictionary-/index.html',
   '/Oromo-dictionary-/manifest.json',
-  '/Oromo-dictionary-/logo1.png',
+  '/Oromo-dictionary-/logo.png',
   '/Oromo-dictionary-/icon-192.png',
   '/Oromo-dictionary-/10.jpg'
 ];
