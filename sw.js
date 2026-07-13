@@ -1,10 +1,9 @@
-const CACHE_NAME = 'oromo-dict-v12'; 
+const CACHE_NAME = 'oromo-dict-v13'; 
 // Changed from v1 to v2 to trigger the update
 const ASSETS = [
   '/Oromo-dictionary-/',
   '/Oromo-dictionary-/index.html',
   '/Oromo-dictionary-/manifest.json',
-  '/Oromo-dictionary-/logo.png',
   '/Oromo-dictionary-/logo.png'
 ];
 // Install Service Worker and cache files
